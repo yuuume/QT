@@ -68,7 +68,7 @@ private slots:
 
     void on_btnlocksty_clicked();
 
-    void on_btnclose1_clicked();
+
 
 
 
@@ -99,6 +99,14 @@ private slots:
     void on_btnexit_2_clicked();
 
     void on_btnsave_clicked();
+
+    void on_btnnextmonth_clicked();
+
+    void on_btnok_clicked();
+
+
+
+    void on_btnclose1_clicked();
 
 private:
     Ui::MyMainWindow *ui;

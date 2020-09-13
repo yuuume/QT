@@ -44,81 +44,6 @@
      <height>632</height>
     </size>
    </property>
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>480</y>
-      <width>571</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="GameMenu">
-     <property name="topMargin">
-      <number>11</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QPushButton" name="btnstart">
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>150</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>start</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnexit">
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>150</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>exit</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnload">
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>150</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>load</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QFrame" name="TopMenuList">
     <property name="geometry">
      <rect>
@@ -1700,7 +1625,7 @@
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QLabel" name="countprice">
+       <widget class="QLabel" name="countbp">
         <property name="text">
          <string/>
         </property>
@@ -1830,11 +1755,23 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>721</width>
-      <height>631</height>
+      <x>-60</x>
+      <y>-70</y>
+      <width>999</width>
+      <height>999</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>999</width>
+      <height>999</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>999</width>
+      <height>999</height>
+     </size>
     </property>
     <property name="styleSheet">
      <string notr="true">background-image: url(:/pigsres/timg4.jpg);</string>
@@ -1846,10 +1783,84 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <zorder>frame</zorder>
-   <zorder>horizontalLayoutWidget</zorder>
-   <zorder>TopMenuList</zorder>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>440</y>
+      <width>551</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="GameMenu">
+     <property name="topMargin">
+      <number>11</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="btnstart">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>start</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnexit">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>exit</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnload">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>load</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
    <zorder>CurTotal</zorder>
+   <zorder>frame</zorder>
+   <zorder>TopMenuList</zorder>
    <zorder>StySet</zorder>
    <zorder>pop1</zorder>
    <zorder>pop2</zorder>
@@ -1861,12 +1872,13 @@
    <zorder>pop8</zorder>
    <zorder>pop10</zorder>
    <zorder>pop4</zorder>
-   <zorder>Data</zorder>
-   <zorder>Shop</zorder>
    <zorder>btnlocksty</zorder>
-   <zorder>Set</zorder>
-   <zorder>SellBox</zorder>
+   <zorder>horizontalLayoutWidget</zorder>
    <zorder>Buff</zorder>
+   <zorder>Data</zorder>
+   <zorder>SellBox</zorder>
+   <zorder>Set</zorder>
+   <zorder>Shop</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
