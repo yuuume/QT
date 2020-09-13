@@ -100,6 +100,10 @@ private slots:
 
     void on_btnsave_clicked();
 
+    void on_btnnextmonth_clicked();
+
+    void on_btnok_clicked();
+
 private:
     Ui::MyMainWindow *ui;
     QMovie *bigpig;
