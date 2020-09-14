@@ -18,8 +18,6 @@ public:
 private slots:
     void on_btnexit_clicked();
 
-
-
     void on_btnstart_clicked();
 
     void on_loadgame_clicked();
@@ -68,10 +66,6 @@ private slots:
 
     void on_btnlocksty_clicked();
 
-    void on_btnclose1_clicked();
-
-
-
     void on_spinBox_1_valueChanged(int arg1);
 
     void on_spinBox_2_valueChanged(int arg1);
@@ -99,6 +93,14 @@ private slots:
     void on_btnexit_2_clicked();
 
     void on_btnsave_clicked();
+
+    void on_btnnextmonth_clicked();
+
+    void on_btnok_clicked();
+
+    void on_btnclose1_clicked();
+
+    void on_btnreset_clicked();
 
 private:
     Ui::MyMainWindow *ui;

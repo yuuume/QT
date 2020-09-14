@@ -1,6 +1,5 @@
 #include "mymainwindow.h"
 #include "ui_mymainwindow.h"
-#include<QPainter>
 #include<QList>
 #include<QMenu>
 #include<QAction>
@@ -9,8 +8,6 @@
 #include<QMovie>
 #include<QDebug>
 #include<QString>
-#include<QLayout>
-#include<QFrame>
 #include<QFile>
 #include<QDesktopServices>
 struct pig
@@ -22,15 +19,13 @@ QList <pig> pigs[100];
 int curmonth,cursty,maxlocksty,gold;
 int buffprice=100,buffspeed=100;
 int stytype[105];
-int buffmap[2][15];
 int buf;
 MyMainWindow::MyMainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MyMainWindow)
 {
     ui->setupUi(this);
-    //图标
-    setWindowIcon(QIcon(":/pigsres/window.jpg"));
+    setWindowIcon(QIcon(":/pigsres/window.jpg"));//图标
     //首页
     //GameMenu显示
     setallpopsdisappear();
@@ -74,7 +69,6 @@ void MyMainWindow::on_btnexit_clicked(){
         pop = QMessageBox::critical(this, "","您确定要退出游戏吗？",QMessageBox::Yes| QMessageBox::No);
         if (pop == QMessageBox::Yes)
         {
-            //canexit=0;
             QApplication* app;
             app->closeAllWindows();//退出程序
         }
@@ -523,6 +517,7 @@ void MyMainWindow::setcurstytypetxt()
     if (stytype[cursty]==2)
         ui->curstytype->setText("黑猪");
 }
+//右侧显示
 void MyMainWindow::on_btnstyshow_clicked()
 {
         ui->TopMenuList->show();
@@ -566,29 +561,6 @@ void MyMainWindow::on_btnsingle_clicked()
     else QMessageBox::about(NULL,"","该猪圈有其他猪，您无法设置");
     setcurstytypetxt();
 }
-//猪圈改变 参数改变获取 页面显示
-void MyMainWindow::moveallreset(){
-    //获取信息
-    setcurstytypetxt();
-    QString temp1,temp2="/100";
-    temp1=QString::number(cursty,10);
-    temp1+=temp2;
-    ui->curstynum->setText(temp1);
-    //画面呈现
-    ui->btnlocksty->setVisible(false);
-    ui->pop1->setMovie(nullmovie);
-    ui->pop2->setMovie(nullmovie);
-    ui->pop3->setMovie(nullmovie);
-    ui->pop4->setMovie(nullmovie);
-    ui->pop5->setMovie(nullmovie);
-    ui->pop6->setMovie(nullmovie);
-    ui->pop7->setMovie(nullmovie);
-    ui->pop8->setMovie(nullmovie);
-    ui->pop9->setMovie(nullmovie);
-    ui->pop10->setMovie(nullmovie);
-    showcurstypigs(cursty-1);
-    if(cursty>maxlocksty) ui->btnlocksty->setVisible(true);
-}
 //猪圈滚动
 void MyMainWindow::on_btnleft_clicked()
 {
@@ -618,6 +590,30 @@ void MyMainWindow::on_btnright2_clicked()
     moveallreset();
     Datashow();//信息更新
 }
+//猪圈改变 参数改变获取 页面显示
+void MyMainWindow::moveallreset(){
+    //获取信息
+    setcurstytypetxt();
+    QString temp1,temp2="/100";
+    temp1=QString::number(cursty,10);
+    temp1+=temp2;
+    ui->curstynum->setText(temp1);
+    //画面呈现
+    ui->btnlocksty->setVisible(false);
+    ui->pop1->setMovie(nullmovie);
+    ui->pop2->setMovie(nullmovie);
+    ui->pop3->setMovie(nullmovie);
+    ui->pop4->setMovie(nullmovie);
+    ui->pop5->setMovie(nullmovie);
+    ui->pop6->setMovie(nullmovie);
+    ui->pop7->setMovie(nullmovie);
+    ui->pop8->setMovie(nullmovie);
+    ui->pop9->setMovie(nullmovie);
+    ui->pop10->setMovie(nullmovie);
+    showcurstypigs(cursty-1);
+    if(cursty>maxlocksty) ui->btnlocksty->setVisible(true);
+}
+
 //解锁新猪圈
 void MyMainWindow::on_btnlocksty_clicked()
 {
@@ -749,11 +745,17 @@ void MyMainWindow::on_btndata_clicked()
 }
 void MyMainWindow::on_btnclose0_clicked()
 {
-    ui->Data->hide();
+    qDebug()<<"shop close"<<endl;
+
+    ui->Data->setVisible(false);
+    qDebug()<<"shop close"<<endl;
 }
+//打开购入出售文件
 void MyMainWindow::on_btncondata_clicked()
 {
-
+    QString strPath = "record.txt";
+    QDesktopServices a;
+    a.openUrl(QUrl(strPath));
 }
 //商店
 void MyMainWindow::on_btnshop_clicked()
@@ -775,7 +777,7 @@ void MyMainWindow::on_btnclose1_clicked()
     ui->spinBox_1->setValue(0);
     ui->spinBox_2->setValue(0);
     ui->spinBox_3->setValue(0);
-    ui->cost->setText(0);
+    ui->cost->setText("0");
     ui->Shop->hide();
 }
 void MyMainWindow::on_spinBox_1_valueChanged(int arg1)
@@ -827,7 +829,7 @@ void MyMainWindow::on_btncost_clicked()
     QFile data("record.txt");
     if (data.open(QFile::WriteOnly | QIODevice::Append|QIODevice::Text)) {
         QTextStream out(&data);
-        out <<"In "<< curmonth<<" month,you have bought "<<a<<" big white pigs "<<b<<" little coloured pigs "<<c<<" blackpigs\n";
+        out <<"In "<< curmonth<<" month,you have bought "<<a<<" big white pigs、"<<b<<" little coloured pigs、"<<c<<" blackpigs\n";
     }
     data.close();
 
@@ -835,14 +837,15 @@ void MyMainWindow::on_btncost_clicked()
     for(int i=0;i<maxlocksty;i++)
         for(int j=0;j<pigs[i].size();j++)
             if(pigs[i][j].type==1) xa+=1;
-
+    //qDebug()<<"a"<<a<<"  "<<"xa"<<xa<<endl;
     for(int i=1;i<=maxlocksty;i++)
         if(stytype[i]==1) xn+=1;
-
+    //qDebug()<<"xn"<<xn<<endl;
     if(xn>0&&a>0){
+        int ave=(xa+a)/xn;
+        //qDebug()<<"a"<<a<<"  "<<"xa"<<xa<<" "<<"xn"<<xn<<endl;
+        //qDebug()<<"ave"<<ave<<endl;
         for(int i=0;i<maxlocksty;i++){
-            int ave=(xa+a)/xn;
-
             pig ww;ww.boughtmonth=curmonth;
             if(stytype[i+1]==1&&a>0){
                 int l=0;
@@ -862,14 +865,13 @@ void MyMainWindow::on_btncost_clicked()
                             ww.type=1;
                             pigs[i].push_back(ww);
                             a--;continue;
-
                         }
                     }
                 }
-
             }
         }
-        while(a>0){
+        //qDebug()<<"a"<<a<<endl;
+        if(a>0){
             for(int i=0;i<maxlocksty;i++){
                 pig ww;ww.boughtmonth=curmonth;
                 if(stytype[i+1]==1&&a>0){
@@ -880,24 +882,23 @@ void MyMainWindow::on_btncost_clicked()
                         ww.w=q;
                         ww.type=1;
                         pigs[i].push_back(ww);
-                        a--;continue;
+                        a--;
+                        if(a==0) break;
+                        continue;
                     }
                 }
             }
         }
-
     }
     xa=0,yb=0,zc=0,xn=0,zn=0;
     for(int i=0;i<maxlocksty;i++)
         for(int j=0;j<pigs[i].size();j++)
             if(pigs[i][j].type==2) yb+=1;
-    qDebug()<<"yb:"<<yb;
     for(int i=1;i<=maxlocksty;i++)
         if(stytype[i]==1) xn+=1;
     if(xn>0&&b>0){
+        int ave=(yb+b)/xn;
         for(int i=0;i<maxlocksty;i++){
-            int ave=(yb+b)/xn;
-            qDebug()<<"ave:"<<ave;
             pig ww;ww.boughtmonth=curmonth;
             if(stytype[i+1]==1&&b>0){
                 int l=0;
@@ -917,16 +918,12 @@ void MyMainWindow::on_btncost_clicked()
                                 ww.type=2;
                                 pigs[i].push_back(ww);
                                 b--;continue;
-
                             }
                         }
                     }
+                }
             }
-            qDebug()<<"Successfully"<<pigs[0].size();
-            qDebug()<<"b"<<b;
-        }
-        while(b>0){
-
+        if(b>0){
             for(int i=0;i<maxlocksty;i++){
                 pig ww;ww.boughtmonth=curmonth;
                 if(stytype[i+1]==1&&b>0){
@@ -937,7 +934,9 @@ void MyMainWindow::on_btncost_clicked()
                         ww.w=q;
                         ww.type=2;
                         pigs[i].push_back(ww);
-                        b--;continue;
+                        b--;
+                        if(b==0) break;
+                        continue;
                     }
                 }
             }
@@ -950,13 +949,12 @@ void MyMainWindow::on_btncost_clicked()
     for(int i=1;i<=maxlocksty;i++)
         if(stytype[i]==2) zn+=1;
     if(zn>0&&c>0){
+        int ave=(zc+c)/zn;
         for(int i=0;i<maxlocksty;i++){
-            int ave=(zc+c)/zn;
             pig ww;ww.boughtmonth=curmonth;
             if(stytype[i+1]==2&&c>0){
                 int l=0;
                 for(int j=0;j<pigs[i].size();j++){
-
                     if(pigs[i][j].type==3)
                      l+=1;
               }
@@ -964,7 +962,7 @@ void MyMainWindow::on_btncost_clicked()
                 if(l<ave){
                     int n=ave-l;
                     while(n--){
-                        if(a>0){
+                        if(c>0){
                             int m=qrand()%31+20;
                             double q=m*1.0;
                             ww.w=q;
@@ -977,7 +975,7 @@ void MyMainWindow::on_btncost_clicked()
                 }
             }
         }
-        while(c>0){
+        if(c>0){
             for(int i=0;i<maxlocksty;i++){
                 pig ww;ww.boughtmonth=curmonth;
                 if(stytype[i+1]==1&&c>0){
@@ -988,7 +986,9 @@ void MyMainWindow::on_btncost_clicked()
                         ww.w=q;
                         ww.type=3;
                         pigs[i].push_back(ww);
-                        c--;continue;
+                        c--;
+                        if(c==0)break;
+                        continue;
                     }
                 }
             }
@@ -1090,6 +1090,10 @@ void MyMainWindow::on_btnclose3_clicked()
 {
     ui->Set->hide();
 }
+void MyMainWindow::on_btnreset_clicked()
+{
+    on_reset_clicked();
+}
 void MyMainWindow::on_btnexit_2_clicked()
 {
     on_btnexit_clicked();
@@ -1111,10 +1115,6 @@ void MyMainWindow::on_btnsave_clicked()
         out<<buffspeed<<endl;
         for(int i=1;i<=100;i++)
             out<<stytype[i]<<endl;
-        for(int i=1;i<=10;i++)
-            qDebug()<<stytype[i]<<endl;
-        for(int i=90;i<=100;i++)
-            qDebug()<<stytype[i]<<endl;
         for(int i=0;i<maxlocksty;i++){
             out<<pigs[i].size()<<endl;
             for(int j=0;j<pigs[i].size();j++)
@@ -1123,10 +1123,6 @@ void MyMainWindow::on_btnsave_clicked()
     }
     file.close();;
     QMessageBox::about(NULL,"","Save Completed");
-    for(int i=0;i<maxlocksty;i++){
-    for(int j=0;j<pigs[i].size();j++)
-        qDebug()<<pigs[i][j].w<<endl<<pigs[i][j].boughtmonth<<endl<<pigs[i][j].type<<endl;
-}
 }
 void MyMainWindow::on_btnload_2_clicked()
 {
@@ -1152,7 +1148,6 @@ void MyMainWindow::on_btnload_2_clicked()
             stytype[n++]=strline.toInt();
         if(cnt>=105){
             if (round==0)l=strline.toInt();//读入这个猪圈有几头猪
-            qDebug()<<" "<<l<<endl;
             if (round==1)temp.w=strline.toDouble();
             if (round==2)temp.boughtmonth=strline.toInt();
             if (round==3){
@@ -1167,10 +1162,6 @@ void MyMainWindow::on_btnload_2_clicked()
           }
            cnt+=1;
     }
-    for(int i=1;i<=10;i++)
-        qDebug()<<stytype[i]<<endl;
-    for(int i=90;i<=100;i++)
-        qDebug()<<stytype[i]<<endl;
     file.close();
     ui->frame->hide();
     ui->Buff->hide();
@@ -1180,8 +1171,81 @@ void MyMainWindow::on_btnload_2_clicked()
     ui->btnexit->hide();
     ui->btnload->hide();
     cursty=1;
-    qDebug()<<"   now";
     showcurstypigs(0);
     on_btnstyshow_clicked();
     setallpopsappear();
+}
+void MyMainWindow::on_btnnextmonth_clicked()
+{
+    curmonth++;
+    ui->curtime->setText(QString::number(curmonth,10));
+    for(int i=0;i<maxlocksty;i++){
+        for(int j=0;j<pigs[i].size();i++){
+            qDebug()<<"buffspeed"<<buffspeed<<endl;
+            for(int x=0;x<30;x++){
+                int a=qrand()%13;
+                double b=a*1.0*buffspeed/1000;
+                pigs[i][j].w+=b;
+            }
+        }
+    }
+    if((curmonth-1)%3==0){
+        ui->SellBox->show();
+        int a=0,b=0,c=0;//总数量
+        double aw=0.0,bw=0.0,cw=0.0;//总重量
+        for(int i=0;i<maxlocksty;i++){
+            for(QList<pig>::iterator it=pigs[i].begin();it!=pigs[i].end();){
+                if(curmonth-it->boughtmonth>=12||it->w>=150.0){
+                    if(it->type==1){
+                        a++;
+                        aw+=it->w;
+                        it=pigs[i].erase(it);
+                    }
+                    if(it->type==2){
+                        b++;
+                        bw+=it->w;
+                        it=pigs[i].erase(it);
+                    }
+                    if(it->type==1){
+                        c++;
+                        cw+=it->w;
+                        it=pigs[i].erase(it);
+                    }
+                }
+                else it++;
+            }
+        }
+        double a1=6.0*buffprice/100,b1=7.0*buffprice/100,c1=15.0*buffprice/100;
+        ui->pricewp->setText(QString::number(a1,10,2));
+        ui->pricesp->setText(QString::number(b1,10,2));
+        ui->pricebp->setText(QString::number(c1,10,2));
+        ui->countwp->setText(QString::number(a,10));
+        ui->countsp->setText(QString::number(b,10));
+        ui->countbp->setText(QString::number(c,10));
+        ui->weightwp->setText(QString::number(aw,10,2));
+        ui->weightsp->setText(QString::number(bw,10,2));
+        ui->weightbp->setText(QString::number(cw,10,2));
+        int p1=a1*aw,p2=b1*bw,p3=c1*cw;
+        ui->profitwp->setText(QString::number(p1,10));
+        ui->profitsp->setText(QString::number(p2,10));
+        ui->profitbp->setText(QString::number(p3,10));
+        int sum=p1+p2+p3;
+        ui->profitsum->setText(QString::number(sum,10));
+        QFile data("record.txt");
+        if(data.open(QFile::WriteOnly | QIODevice::Append|QIODevice::Text)) {
+            QTextStream out(&data);
+            out <<"In "<< curmonth<<" month,you sold "<<a<<" big white pigs、"<<b<<" little coloured pigs、"<<c<<" blackpigs and get "<<sum<<" gold\n";
+        }
+        data.close();
+        gold+=sum;
+        ui->btnnextmonth->setEnabled(false);
+        on_btnstyshow_clicked();
+    }
+    Datashow();//信息更新
+}
+void MyMainWindow::on_btnok_clicked()
+{
+    moveallreset();
+    ui->btnnextmonth->setEnabled(true);
+    ui->SellBox->hide();
 }
